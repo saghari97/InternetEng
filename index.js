@@ -19,16 +19,12 @@ try{
  features.foreach(function(feature){
   feature.geometry.coordinates.foreach(function(coordinates){
    if(pointI(pointII,coordinates))
-    result.polygons.push(feature
-/////////
-console.log('--------------------------- NEW APP ')
-app.use('/' , (req, res, next)=>{
-    console.log('Middleware Called!')
-    next();
-});
-app.get('/', (req, res) => {
-    console.log(req.query)
-  
+    result.polygons.push(feature.properties.name);
+})})
+res.json(result);}
+catch(error){
+res.sendStatus(404);}}
+)
 //at the end
 app.put('/gis/addpolygon',(req,des)=>{
  try{InternetEng.features.push(req.body);
