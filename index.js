@@ -3,6 +3,7 @@ const express = require('express');
 const whiskers = require('whiskers');
 const app=expree();
 const port = 3000;
+var features = [];
 var areas = fs.readFilesSync('./sample-data.json');
 var InternetEng = JSON.parse(areas.toString());
 console.log('--------------------------- NEW APP ')
