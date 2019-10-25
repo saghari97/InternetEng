@@ -4,10 +4,10 @@ const whiskers = require('whiskers');
 const app=express();
 const port = 3000;
 var pointI = require ('point-in-polygon');
-var arrs = [];
+var features = [];
 var areas = fs.readFilesSync('./sample-data.json');
 var InternetEng = JSON.parse(areas);
-InternetEng.arrs.forEach(function (arr) {
+InternetEng.arrs.forEach(function (features) {
   arrs.push(feature);
 
 });
