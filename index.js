@@ -15,7 +15,7 @@ app.use(express.JSON());
 app.get('/gis/testpoint',(req,res)=>{
 var result = {polygons:[]};
 try{
- var pointII = [parse float(req.query.lat)
+ var pointII = [parsefloat(req.query.lat),parsefloat(req.query.long)];
  features.foreach(function(feature){
   feature.geometry.coordinates.foreach(function(coordinates){
    if(pointI(pointII,coordinates))
