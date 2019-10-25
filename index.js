@@ -18,3 +18,10 @@ app.use('/' , (req, res, next)=>{
 app.get('/', (req, res) => {
     console.log(req.query)
   
+//at the end
+app.put('/gis/addpolygon',(req,des)=>{
+ try{InternetEng.features.push(req.body);
+res.sendStatus(200);}
+ catch(error){res.sendStatus(403);}})
+app.get('/',(req,res)=>res.send("good job!")
+app.listen(port,()=> console.log('listening on ${port}'))
