@@ -11,7 +11,7 @@ InternetEng.arrs.forEach(function (arr) {
   arrs.push(feature);
 
 });
-app.use(express.JSON());
+app.use(express.json());
 app.get('/gis/testpoint',(req,res)=>{
 var result = {polygons:[]};
 try{
