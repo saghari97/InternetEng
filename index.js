@@ -1,34 +1,56 @@
-const fs = require('fs');
-const express = require('express');
-const whiskers = require('whiskers');
-const app=express();
-const port = 3000;
-var pointI = require ('point-in-polygon');
-var features = [];
-var areas = fs.readFilesSync('./sample-data.json');
-var InternetEng = JSON.parse(areas);
-InternetEng.arrs.forEach(function (features) {
-  arrs.push(feature);
+const express = require('express')
+const whiskers = require('whiskers') 
+const fs = require('fs')
+const app = express()
+const port = 3000
+const portListen= process.env.PORT || port
 
+var inch = require('@turf/point-in-polygon')
+var pointies = require('turfPoint')
+var polygonies = require('turfPolygon')
+var areas = fs.readFileSync('./sample-data', 'utf8')
+var whole = JSON.parse(areas);
+
+console.log('--------------------------- NEW APP ')
+app.use('/' , (req, res, next)=>{
+    console.log('Middleware Called!')
+    next();
 });
-app.use(express.json());
-app.get('/gis/testpoint',(req,res)=>{
-var result = {polygons:[]};
-try{
- var pointII = [parsefloat(req.query.lat),parsefloat(req.query.long)];
- features.foreach(function(feature){
-  feature.geometry.coordinates.foreach(function(coordinates){
-   if(pointI(pointII,coordinates))
-    result.polygons.push(feature.properties.name);
-})})
-res.json(result);}
-catch(error){
-res.sendStatus(404);}}
-)
-//at the end
-app.put('/gis/addpolygon',(req,des)=>{
- try{InternetEng.features.push(req.body);
-res.sendStatus(200);}
- catch(error){res.sendStatus(403);}})
-app.get('/',(req,res)=>res.send("good job!")
-app.listen(port,()=> console.log('listening on ${port}'))
+
+app.get('/gis/testpoing', (req, res) => {
+    console.log(req.query)
+
+    var states = { polygons : [] };
+
+    whole.features.forEach(polygon => {
+        if (inch.default(pointies([req.query.long, req.query.lat]), polygonies(polygon.geometry.coordinates))) {
+            states.polygons.push(polygon.properties.name);
+        }
+    });
+    res.send(states);
+});
+
+//    res.send( whiskers.render(`
+//        <html>
+//        <body>
+//        <h1>Hello team a new rendering engine is out!</h1>
+//         <ul>
+//            <li>Foo is:{query.foo}</li>
+//             <li>Bar is:{query.bar}</li>
+//         <ul>
+//         </body>
+//         </html>
+//    `, req))
+// });
+
+app.put('/gis/addpolygon'.express.JSON(),(req,res)=>{
+    whole.features.push(req.body)
+    fs.writeFileSync('./sample-data',JSON.stringify(whole),(err)=>{
+        if(err){
+            console.log("failed");
+        }
+    });
+    res.send("done!")
+});
+
+app.listen(portListen, () => console.log(`Example app listening on port ${port}!`))
